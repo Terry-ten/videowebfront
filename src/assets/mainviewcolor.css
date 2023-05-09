@@ -1,0 +1,75 @@
+/* 主题颜色 */
+:root {
+    --theme-color: #4a90e2;
+    --light-theme-color: #d6e8ff;
+  }
+  
+  /* Header */
+  .el-header {
+    background-color: var(--theme-color);
+    color: white;
+  }
+  
+  .logo {
+    color: white;
+  }
+  
+  /* Aside */
+  .el-aside {
+    background-color: var(--light-theme-color);
+  }
+  
+  /* Menu */
+  .el-menu {
+    background-color: var(--light-theme-color);
+  }
+  
+  .el-menu-item {
+    color: var(--theme-color);
+  }
+  
+  .el-menu-item i {
+    color: var(--theme-color);
+  }
+  
+  .el-menu-item:hover {
+    background-color: rgba(74, 144, 226, 0.1);
+  }
+  
+  .el-menu-item.is-active {
+    background-color: rgba(74, 144, 226, 0.2);
+  }
+  
+  /* Buttons */
+  .el-button {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    color: white;
+  }
+  
+  .el-button:hover,
+  .el-button:focus {
+    background-color: #3f82c6;
+    border-color: #3f82c6;
+    color: white;
+  }
+  
+  /* Input */
+  .el-input .el-input__inner:focus {
+    border-color: var(--theme-color);
+  }
+  
+  .search-icon {
+    color: var(--theme-color);
+  }
+  
+  /* Dropdown */
+  .avatar-dropdown .el-dropdown-link:hover {
+    color: white;
+  }
+  
+  .el-dropdown-menu__item:hover {
+    background-color: var(--theme-color);
+    color: white;
+  }
+  

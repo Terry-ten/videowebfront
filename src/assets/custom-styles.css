@@ -1,0 +1,110 @@
+*{
+margin:0;
+padding: 0;
+}
+body {
+  overflow-x: hidden;
+}
+.el-container {
+  height: 100vh;
+  
+}
+.main{
+  height: calc(100% - 70px);
+  
+}
+
+.el-header {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  align-items: center;
+  height: 60px;
+  font-size: 40px;
+  color: #3b5998;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.el-footer{
+  height: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.parent {
+  position: relative;
+}
+
+.button-left {
+  float: left;
+}
+
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+.el-menu{
+  border-right: 0 !important;
+}
+.el-aside {
+  background-color: #3b5998;
+  /* border: 1px solid #1c1a27; */
+  width: 10%;
+  
+}
+
+.el-menu-item {
+  background-color: #3b5998 !important;
+  color: #dbdbd9 !important;
+  border: #3b5998;
+}
+
+.el-menu-item > a,
+.el-menu-item > a:hover,
+.el-sub-menu__title {
+  color: #d6fbf9 !important;
+}
+
+.el-sub-menu {
+  background-color: #3b5998;
+}
+
+/* 调整悬停时的背景颜色透明度 */
+.el-menu .el-sub-menu:hover > .el-sub-menu__title {
+  background-color: rgb(67, 65, 112) !important;
+}
+
+/* 设置悬停时文字高亮 */
+.el-menu .el-sub-menu:hover > .el-sub-menu__title span {
+  color: #ebebe9 !important;
+}
+
+
+
+.button-left {
+  background-color: transparent;
+  color: rgb(74, 74, 74);
+}
+
+.el-dialog{
+  width: 500px;
+}
+.el-table{
+  width: 100%;
+}
+.body {
+  margin: 0%;
+}
+.custom-table .el-table__header, 
+.custom-table .el-table__body, 
+.custom-table .el-table__footer {
+  width: 100% !important;
+  table-layout: fixed;
+}
+
+.custom-table .el-table__header .cell, 
+.custom-table .el-table__body .cell, 
+.custom-table .el-table__footer .cell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
