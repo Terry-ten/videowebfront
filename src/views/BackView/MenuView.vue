@@ -54,6 +54,7 @@
                     <template v-slot="{ row }">
                       <el-switch
                         v-model="row.viewable"
+                        :disabled="row.menuname==='管理员主页'"
                         @change="toggleVisibility(row)"
                         style="margin-left: 45%"
                       />
@@ -98,9 +99,7 @@ import AsideView from '../PopularElment/AsideView.vue';
       headimage:JSON.parse(localStorage.getItem("userdata")).headimage
     };
   },
-
-  methods: {
-    
+  methods: { 
     fetchData() {
   const { menuname } = this.searchForm;
   axios
@@ -125,7 +124,6 @@ import AsideView from '../PopularElment/AsideView.vue';
 },
 
     toggleVisibility(row) {
-    // 将布尔值转换回整数，1 代表可见，0 代表不可见
     const newVisibility = row.viewable ? 1 : 0;
     axios.post('/api/menus/update', null,{
     params: {
@@ -153,5 +151,6 @@ import AsideView from '../PopularElment/AsideView.vue';
 </script>
 
 <style scoped>
+
 @import url("../../assets/custom-styles.css");
 </style>

@@ -125,7 +125,7 @@ export default {
         if (valid) {
           // 在此处执行注册逻辑
           axios
-            .post("/api/users/add", this.registerForm)
+            .post("/api/regist/users/add", this.registerForm)
             .then((result) => {
               if (result.data.code === 1) {
                 this.$message.success("注册成功");

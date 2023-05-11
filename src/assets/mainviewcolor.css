@@ -1,7 +1,7 @@
 /* 主题颜色 */
 :root {
     --theme-color: #4a90e2;
-    --light-theme-color: #d6e8ff;
+    --light-theme-color: #7eb2ff;
   }
   
   /* Header */
@@ -62,8 +62,8 @@
   .search-icon {
     color: var(--theme-color);
   }
-  
-  /* Dropdown */
+/*   
+  Dropdown
   .avatar-dropdown .el-dropdown-link:hover {
     color: white;
   }
@@ -71,5 +71,5 @@
   .el-dropdown-menu__item:hover {
     background-color: var(--theme-color);
     color: white;
-  }
+  } */
   

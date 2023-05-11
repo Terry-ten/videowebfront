@@ -8,14 +8,17 @@
               v-for="(topMenu, topIndex) in menuData"
               :key="topIndex"
               :index="topMenu.menuname"
+              v-show="filteredChildren(topMenu).length > 0"
             >
-              <template #title>{{ topMenu.menuname }}</template>
+            
+              <template #title><el-icon><Tools /></el-icon>{{ topMenu.menuname }}</template>
+              
               <el-menu-item
                 v-for="(subMenu, subIndex) in filteredChildren(topMenu)"
                 :key="subIndex"
                 :index="subMenu.route"
               >
-                <router-link :to="subMenu.route">{{
+                <router-link :to="subMenu.route"><el-icon><UserFilled /></el-icon>{{
                   subMenu.menuname
                 }}</router-link>
               </el-menu-item>

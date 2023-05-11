@@ -93,8 +93,11 @@
     align-items: center;
     background-color: #409EFF;
     height: 60px;
+    box-shadow: 0 0px 6px rgba(16, 16, 16, 0.59);
   }
-  
+  el-aside{
+    
+  }
   .logo {
     color: #fff;
     font-size: 24px;

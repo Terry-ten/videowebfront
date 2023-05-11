@@ -17,6 +17,7 @@
           </el-menu>
         </el-aside>
         <el-main v-if="!userNotFound">
+         
           <el-collapse v-model="activeNames">
             <el-collapse-item name="1">
               <template #title>
@@ -29,10 +30,12 @@
               </div>
             </el-collapse-item>
           </el-collapse>
+       
+        
           <el-table :data="userVideos" style="width: 100%">
             <el-table-column prop="coverimage" label="封面">
               <template #default="{ row }">
-                <img :src="row.coverimage" class="video-cover" />
+                <img @click="gotoWatch(row.id)" :src="row.coverimage" class="video-cover" />
               </template>
             </el-table-column>
             <el-table-column prop="title" label="标题"></el-table-column>
@@ -44,6 +47,7 @@
               label="发布时间"
             ></el-table-column>
           </el-table>
+        
         </el-main>
       </el-container>
     </el-container>
@@ -93,6 +97,13 @@ export default {
             this.userVideos = result.data.data
         })
     },
+    gotoWatch(id){
+      this.$router.push({
+        path: "/watch",
+        query: { id: id },
+      });
+    }
+    
   },
   mounted() {
     
@@ -108,25 +119,22 @@ export default {
 
 <style scoped>
 .logo {
-  font-size: 24px;
+  font-size: 30px;
   color: white;
-  
-}
-.user-not-found {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  margin: 0; 
 }
 
 .video-cover {
   width: 100px;
   height: auto;
 }
-
+.el-menu-item {
+  font-size: 20px; /* 修改字体大小 */
+  color: #fff; /* 修改字体颜色为白色 */
+}
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #409eff;
   height: 60px;
@@ -137,6 +145,12 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
   border-bottom: 1px solid #eee;
+}
+el-menu{
+  border-right: 0 !important;
+}
+el-aside{
+  background-color: #409eff;
 }
 
 </style>"

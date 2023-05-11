@@ -1,5 +1,11 @@
 <template>
   <div class="video-page">
+    <el-button
+      class="home-button"
+      type="text"
+      icon="el-icon-house"
+      @click="goHome"
+    >返回首页</el-button>
     <el-card>
       <video
         ref="videoPlayer"
@@ -9,27 +15,29 @@
         class="video-player"
       ></video>
       <div class="actions">
+        <div class="video-info">
+          <h2>{{ videoTitle }}</h2>
+            <el-row>
+            <el-avatar shape="square" :size="large" :src="this.authorobject.headimage" />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <h3 @click="gotoOthersView(author)">作者：{{ author }}</h3>
+          </el-row>
+          <p class="video-date">发布日期：{{ videoDate }}</p>
+          <p>简介：{{ videoDescription }}</p>
+        </div>
         <el-button
           icon="el-icon-warning-outline"
-          type="text"
+          link
           circle
           @click="openVideoDialog = true"
           class="report-btn"
           >举报视频</el-button
         >
-        <div class="video-info">
-          <h2>{{ videoTitle }}</h2>
-          <p>{{ videoDescription }}</p>
-          <h3 @click="gotoOthersView(author)">{{ author }}</h3>
-          <el-button
-            icon="el-icon-thumb"
-            type="primary"
-            circle
-            @click="likeVideo"
-            class="like-btn"
-          ></el-button>
-          <span class="likes-count">{{ likesCount }}</span>
-        </div>
+        <div class="like-image">
+          <el-image v-if="this.videoisliked" src="https://zr-video-web.oss-cn-chengdu.aliyuncs.com/light.png" @click="setlikedgrey"></el-image>
+          <el-image v-if="!this.videoisliked" src="https://zr-video-web.oss-cn-chengdu.aliyuncs.com/grey.png" @click="setlikedlight"></el-image>
+          <p>点赞数：{{ likesCount }}</p>
+      </div>
       </div>
     </el-card>
     <el-card class="submit-comment-card">
@@ -39,8 +47,9 @@
           v-model="newCommentContent"
           placeholder="输入您的评论"
           clearable
-          :rows="3"
+          :rows="2"
           type="textarea"
+          :maxlength="50"
         ></el-input>
         <el-button
           type="primary"
@@ -61,14 +70,17 @@
             </div>
             <div class="right">
               <el-button
-                type="text"
+                link
+                type="danger"
+      
                 @click="(commentId = comment.id), (openCommentDialog = true)"
                 class="report-comment-btn"
               >
                 举报
               </el-button>
               <el-button
-                type="text"
+                link
+                type="primary"
                 @click="openReplyDialog(comment)"
                 class="reply-comment-btn"
               >
@@ -80,7 +92,7 @@
             <p>{{ comment.content }}</p>
           </div>
           <el-button
-            type="text"
+            link
             @click="getReplies(comment.id)"
             class="show-replies-btn"
           >
@@ -117,6 +129,7 @@
         v-model="videoreportcontent"
         :rows="3"
         type="textarea"
+        :maxlength="50"
         placeholder="小心举报，认真做事"
       />
       <template #footer>
@@ -137,6 +150,7 @@
         v-model="commentreportcontent"
         :rows="3"
         type="textarea"
+        :maxlength="50"
         placeholder="小心举报，认真做事"
       />
       <template #footer>
@@ -154,10 +168,12 @@
 
     <el-dialog v-model="ReplyDialog" title="输入该评论的回复">
       <el-input v-model="commentcontent" disabled />
+      <br/><br/>
       <el-input
         v-model="replycontent"
         :rows="3"
         type="textarea"
+        :maxlength="50"
         placeholder="请留下善意的回复哦"
       />
       <template #footer>
@@ -174,24 +190,42 @@
     </el-dialog>
   </div>
 </template>
+
+
+
 <style scoped>
 .video-page {
   max-width: 800px;
   margin: 0 auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  background-color: #e6f7ff;  /* 淡蓝色背景 */
+  background-image: url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png');  /* 添加花纹背景 */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
 .el-card {
   border: none;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background-color: white;  /* 卡片背景为白色 */
+  margin-bottom: 20px;  /* 卡片间距 */
+  border-radius: 15px;  /* 卡片边角圆滑 */
 }
+
 .video-player {
   width: 100%;
   height: auto;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
+.home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #409EFF; 
+ }
 
 .actions {
   display: flex;
@@ -205,27 +239,30 @@
 }
 
 .video-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    flex: 1;
 }
 
 h2 {
-  font-size: 24px;
-  margin: 0;
+    font-size: 24px;
+    margin: 0;
 }
-
+h3 {
+    font-size: 20px;
+    margin: 0;
+}
 p {
   margin: 0;
 }
-.like-btn {
-  margin-top: 10px;
+.video-date {
+    font-size: 16px;
+    color: #999;
 }
-.likes-count {
-  font-size: 18px;
-  margin-top: 10px;
-  color: #409eff;
+.report-btn {
+    align-self: flex-start;
 }
 .comments-card {
   margin-top: 20px;
@@ -319,11 +356,15 @@ export default {
   name: "VideoPlayer",
   data() {
     return {
+      userlike:{},
+      videoisliked:false,
+      authorobject:{},
       videoId: "",
       videoUrl: "",
       coverImageUrl: "",
       videoTitle: "",
       videoDescription: "",
+      videoDate:"",
       author: "",
       likesCount: 0,
       comments: [],
@@ -349,6 +390,52 @@ export default {
     this.watchcountUp(this.videoId);
   },
   methods: {
+    goHome() {
+      this.$router.push('/videoweb');
+    },
+    async setlikedgrey(){
+      
+  this.userlike.islike=0;
+  console.log("即将取消点赞，已经将islike设置为"+this.userlike.islike)
+  if(await this.updateUserVideoLike(this.userlike)){
+    console.log("执行取消点赞成功,即将取消点赞")
+    this.videoisliked=false;
+    this.likesCount=this.likesCount-1;
+    this.$message.success("取消点赞")
+  }else{
+    this.videoisliked=true;
+    this.$message.error("取消失败")
+  }
+},
+async setlikedlight(){
+  this.userlike.islike=1;
+  console.log("即将开始点赞，已经将islike设置为"+this.userlike.islike)
+  console.log(this.userlike)
+  if(await this.updateUserVideoLike(this.userlike)){
+    console.log("点赞成功,即将点赞")
+    this.videoisliked=true;
+    this.likesCount=this.likesCount+1;
+    this.$message.success("点赞成功")
+  }else{
+    this.videoisliked=false;
+    this.$message.error("点赞失败")
+  }
+}, 
+updateUserVideoLike(userlike){
+  return new Promise((resolve) => {
+    axios.post("/api/videos/userlike/islike",userlike).then((result) => {
+      if(result.data.code===1){
+        console.log("result.data.code"+result.data.code)
+        resolve(true);
+      }else{
+        resolve(false);
+      }
+    }).catch(() => {
+      resolve(false);
+    });
+  })
+},
+
     gotoOthersView(author) {
       axios
         .get("/api/videos/watch/id/get", {
@@ -451,18 +538,45 @@ export default {
         const result = await axios.get("/api/videos/watch/" + id);
         if (result.data.data != null) {
           const videoData = result.data.data;
+          this.videoDate=videoData.createtime;
           this.videoUrl = videoData.videolocation;
           this.coverImageUrl = videoData.coverimage;
           this.videoTitle = videoData.title;
           this.videoDescription = videoData.description;
           this.likesCount = videoData.goods;
           this.author = videoData.author;
+
         } else {
           this.$router.push("notfound");
         }
       } catch (error) {
         console.error("Error getting video details:", error);
       }
+     await axios.get("/api/users/watch/get/"+this.author).then((result) => {
+        this.authorobject=result.data.data
+      }) 
+      axios.get("/api/videos/userlike/get",{params:{
+        userid:this.me.id,
+        videoid:this.videoId
+      }}).then((result) => {
+        if(result.data.data!=null){
+          console.log("该用户曾经点过赞")
+          this.userlike=result.data.data
+          if(this.userlike.islike===1){
+          console.log("对该视频的点赞设为真")
+            this.videoisliked=true
+          }
+        }else{
+          console.log("该视频还未进行点赞，会对userlike设置默认值")
+          this.userlike.userid=this.me.id;
+          this.userlike.videoid=this.videoId;
+          console.log("该用户的userid为："+this.userlike.userid)
+          console.log("该视频的videoid为："+this.userlike.videoid)
+          this.videoisliked=false;
+        }
+      }).catch((err) => {
+        this.$message.error("请求点赞"+err)
+      });
     },
     async getComments(id) {
       try {
@@ -482,7 +596,7 @@ export default {
         (comment) => comment.id === commentId
       );
       if (commentIndex !== -1) {
-        if (!this.comments[commentIndex].showReplies) {
+        if (!this.comments[commentIndex].showReplies) { 
           try {
             const result = await axios.get(
               "/api/comments/replies/" + commentId

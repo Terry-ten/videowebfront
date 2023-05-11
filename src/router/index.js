@@ -88,7 +88,7 @@ const routes = [
     path: '/regist',
     name: 'RegistView',
     component:() => import('../views/LoginView/RegistView.vue'),
-    meta: { requiresAuth: true },
+
   },
   
   {
@@ -138,7 +138,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // 检查本地存储中是否有 token
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (!token ) {
       // 如果没有 token，则重定向到登录页面
       next({ path: '/login' });
     } else {

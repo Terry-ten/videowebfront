@@ -73,6 +73,7 @@
                     <template v-slot="{ row }">
                       <el-row>
                         <el-select
+                        :disabled="row.id === 1"
                           v-model="row.rolename"
                           class="m-2 select-width"
                           placeholder="角色类型"
@@ -88,10 +89,10 @@
                         &nbsp;&nbsp;&nbsp;
                         <el-popconfirm
                           title="确定删除选定角色吗？"
-                          @confirm="() => deleteRoles(row.userid,row.rolename)"
+                          @confirm="() => deleteRoles(row.userid,row.rolename) "
                         >
                           <template #reference>
-                            <el-button type="danger">删除角色</el-button>
+                            <el-button type="danger"  :disabled="row.id===1">删除角色</el-button>
                           </template>
                         </el-popconfirm>
                       </el-row>

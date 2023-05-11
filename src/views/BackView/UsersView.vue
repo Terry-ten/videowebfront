@@ -258,7 +258,6 @@
             />
             <el-footer>copyright by zr@sicnu</el-footer>
           </el-main>
-          
         </el-container>
       </el-container>
     </el-container>
@@ -276,6 +275,7 @@ import AsideView from '../PopularElment/AsideView.vue';
   data() {
     return {
       form: {
+        allowedtoupload:false,
         username: "",
         password: "",
         headimage: "",
@@ -365,12 +365,12 @@ import AsideView from '../PopularElment/AsideView.vue';
           this.tableData = result.data.data.rows;
           this.total = result.data.data.total;})
         .catch((error) => {
-          console.error("Error fetching data:", error);
+          console.error("获取数据失败:", error);
         });
     },
     deleteuser(row) {
       axios.delete("/api/users/delete/" + row.username).then((result) => {
-        if (result.code === 1) {
+        if (result.data.code === 1) {
           this.$message.success(result.data.msg);
           this.fetchData();
         } else {
@@ -433,14 +433,16 @@ import AsideView from '../PopularElment/AsideView.vue';
         if (!isJPG && !isPNG) {
           this.$message.error("上传头像只能是 JPG 或 PNG 格式!");
           reject(new Error("上传头像只能是 JPG 或 PNG 格式!"));
+          this.allowedtoupload=false;
         } else {
+          this.allowedtoupload=true;
           resolve(file);
         }
       });
     },
     async submitForm() {
       this.$refs.form.validate(async (valid) => {
-        if (valid) {
+        if (valid && this.allowedtoupload) {
           try {
             let result;
             if (this.dialogType === "insert") { 
@@ -449,6 +451,7 @@ import AsideView from '../PopularElment/AsideView.vue';
                 username: this.form.username,
                 password: this.form.password,
                 phonenumber: this.form.phonenumber,
+                idcard:this.form.idcard,
                 introduction: this.form.introduction,
                 headimageurl:this.editheadimageurl,
                 id: this.form.id,

@@ -48,7 +48,7 @@ body {
 .el-aside {
   background-color: #3b5998;
   /* border: 1px solid #1c1a27; */
-  width: 10%;
+  width: 11%;
   
 }
 
@@ -71,6 +71,7 @@ body {
 /* 调整悬停时的背景颜色透明度 */
 .el-menu .el-sub-menu:hover > .el-sub-menu__title {
   background-color: rgb(67, 65, 112) !important;
+  
 }
 
 /* 设置悬停时文字高亮 */

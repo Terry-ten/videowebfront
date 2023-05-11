@@ -35,14 +35,14 @@
             width="50%"
             @close="resetForm"
           >
-            <el-form :model="editForm" ref="editForm" label-width="120px">
-              <el-form-item label="标题">
+            <el-form :model="editForm" :rules="rules" ref="editForm" label-width="120px">
+              <el-form-item label="标题" prop="title">
                 <el-input v-model="editForm.title" />
               </el-form-item>
               <el-form-item label="简介">
                 <el-input v-model="editForm.description" type="textarea" />
               </el-form-item>
-              <el-form-item label="替换封面">
+              <el-form-item label="替换封面" prop="coverimage">
                 <el-upload
                   :on-change="handleCoverChange"
                   :before-upload="beforeCoverUpload"
@@ -64,7 +64,7 @@
               </el-form-item>
             </el-form>
           </el-dialog>
-
+          <el-card>
           <el-table :data="videos" border style="width: 100%">
             <el-table-column
               prop="coverimageurl"
@@ -136,6 +136,7 @@
               </template>
             </el-table-column>
           </el-table>
+         </el-card>
         </el-main>
       </el-container>
     </el-container>
@@ -167,6 +168,31 @@ export default {
         coverimage: [],
         coverimageurl: "",
       },
+      rules: {
+  title: [
+    { required: true, message: "标题不能为空", trigger: "change" },
+  ],
+  coverimage: [
+    {
+      validator: (rule, value, callback) => {
+        if (!value || value.length === 0) {
+          callback(new Error("请选择封面图片"));
+        } else {
+          const file = value[0].raw;
+          console.log("图片的类型"+file.type);
+          const isJPG = file.type === "image/jpeg"; 
+          const isPNG = file.type === "image/png";
+          if (!isJPG && !isPNG) {
+            callback(new Error("只能上传jpg或png格式的图片"));
+          } else {
+            callback();
+          }
+        }
+      },
+      trigger: "change",
+    },
+  ],
+},
     };
   },
   methods: {
@@ -244,6 +270,10 @@ export default {
     this.editForm.coverimage = [file];
   },
   submitEditForm() {
+    this.$refs.editForm.validate((valid) => {
+    if (!valid) {
+      return;
+    }
     const formData = new FormData();
     formData.append("id",this.editForm.id)
     formData.append("title", this.editForm.title);
@@ -271,7 +301,9 @@ export default {
       .catch((error) => {
         this.$message.error(error);
       });
+    });
   },
+
   },
   mounted() {
     // 获取 URL 参数中的用户名
@@ -305,13 +337,7 @@ export default {
   color: white;
 }
 
-/* .avatar-dropdown {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  line-height: normal;
-} */
+
 
 .el-main {
   display: flex;
@@ -324,27 +350,22 @@ export default {
   width: 80%;
   max-width: 800px;
   border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.307), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .el-aside {
   background-color: #64b5f6; /* 更浅的蓝色 */
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.307), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .el-menu {
   background-color: #64b5f6; /* 更浅的蓝色 */
   text-color: #fff;
-  active-text-color: #1e9fff;
+  
 }
 
-.el-menu-item {
-  border-bottom: 1px solid #42a5f5;
-}
 
-.el-menu-item.is-active {
-  background-color: #42a5f5;
-}
+
 
 .el-container {
   height: 100%;

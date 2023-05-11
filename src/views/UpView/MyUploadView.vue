@@ -35,7 +35,7 @@
               <el-form-item label="视频标题">
                 <el-input
                   v-model="uploadForm.title"
-                  :maxlength="20"
+                  :maxlength="10"
                   show-word-limit
                 ></el-input>
               </el-form-item>
@@ -44,7 +44,7 @@
                   v-model="uploadForm.description"
                   type="textarea"
                   :rows="4"
-                  :maxlength="200"
+                  :maxlength="20"
                   show-word-limit
                 ></el-input>
               </el-form-item>
@@ -119,12 +119,44 @@ export default {
     };
   },
   methods: {
+    validateForm() {
+      if (!this.uploadForm.title) {
+        this.$message.error("视频标题不能为空");
+        return false;
+      }
+
+      if (!this.uploadForm.type) {
+        this.$message.error("必须选择一个类别");
+        return false;
+      }
+
+      if (this.uploadForm.coverList.length === 0) {
+        this.$message.error("图片为空或者格式错误");
+        return false;
+      }
+
+      if (this.uploadForm.videoList.length === 0) {
+        this.$message.error("视频为空或者格式错误");
+        return false;
+      }
+
+      return true;
+    },
     handleCoverChange(file) {
-      this.uploadForm.coverList = [file];
-    },
-    handleVideoChange(file) {
-      this.uploadForm.videoList = [file];
-    },
+  if(!["image/png", "image/jpeg"].includes(file.raw.type)) {
+    this.$message.error("图片格式必须为png或者jpg");
+  } else {
+    console.log("文件类型"+file.raw.type);
+    this.uploadForm.coverList = [file];
+  }
+},
+handleVideoChange(file) {
+  if(file.raw.type !== "video/mp4") {
+    this.$message.error("视频格式必须为MP4");
+  } else {
+    this.uploadForm.videoList = [file];
+  }
+},
     beforeVideoUpload(file) {
       const isMp4 = file.type === "video/mp4";
       if (!isMp4) {
@@ -143,6 +175,10 @@ export default {
         });
     },
     submitForm() {
+      if (!this.validateForm()) {
+        return;
+      }
+
       const uploadUrl = "/api/videos/add";
       const formData = new FormData();
       formData.append("author",this.me.username)
@@ -215,12 +251,12 @@ export default {
   width: 80%;
   max-width: 800px;
   border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.356), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .el-aside {
   background-color: #64b5f6; 
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.29), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .el-menu {
