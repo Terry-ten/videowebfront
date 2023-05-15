@@ -22,7 +22,6 @@
                 class="demo-form-inline"
               >
                 <el-row>
-                  <!-- 新的 el-col，用于容纳添加用户按钮 -->
                   <el-col :span="2">
                     <el-form-item>
                       <el-button
@@ -401,7 +400,7 @@ import AsideView from '../PopularElment/AsideView.vue';
         this.form.headimage = null;
       }
     },
-    validatePassword(rule, value, callback) {
+    validatePassword(rules, value, callback) {
       const reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
       if (!reg.test(value)) {
         callback(new Error("密码大于6位且不能是纯英文或数字"));
@@ -409,7 +408,7 @@ import AsideView from '../PopularElment/AsideView.vue';
         callback();
       }
     },
-    validateIdCard(rule, value, callback) {
+    validateIdCard(rules, value, callback) {
       const reg =
         /^\d{6}(19[0-9]{2}|20[0-1][0-9]|2022|2023)(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$/;
       if (!reg.test(value)) {
@@ -418,7 +417,7 @@ import AsideView from '../PopularElment/AsideView.vue';
         callback();
       }
     },
-    validatePhoneNumber(rule, value, callback) {
+    validatePhoneNumber(rules, value, callback) {
       const reg = /^1[3-9]\d{9}$/;
       if (!reg.test(value)) {
         callback(new Error("请输入正确的手机号"));

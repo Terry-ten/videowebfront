@@ -84,7 +84,7 @@
                   </el-table-column>
                   <el-table-column
                     prop="videolocation"
-                    label="视频内容"
+                    label="视频地址"
                     width="150"
                   >
                   </el-table-column>

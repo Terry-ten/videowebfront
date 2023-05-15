@@ -81,6 +81,7 @@
                 >确认</el-button
               >
             </span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="dialog-footer">
               <el-button @click="changePasswordDialogVisible = false"
                 >取消</el-button
@@ -155,7 +156,7 @@ export default {
     },
     updateUserInfo() {
       this.$refs['userInfoForm'].validate((valid) => {
-        if (!this.avatarIsValid) {  // 添加这一段
+        if (!this.avatarIsValid) { 
         this.$message.error("头像未通过验证");
         return;
       }
@@ -201,7 +202,7 @@ export default {
       }
       if (this.isAnswerCorrect) {
         axios
-          .put("/api/users/password/update/" + this.changePasswordForm.password)
+          .put("/api/users/password/update/" + this.changePasswordForm.password+"/"+this.me.id)
           .then((result) => {
             if (result.data.code === 1) {
               this.$message.success(result.data.msg);
@@ -247,7 +248,7 @@ export default {
 
       if (!isJPG && !isPNG) {
         this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
-        this.avatarIsValid = false;  // 添加这一行
+        this.avatarIsValid = false;  
         return false;
       }
       this.userInfoForm.avatarList = [file];

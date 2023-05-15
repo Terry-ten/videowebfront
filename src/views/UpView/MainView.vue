@@ -47,14 +47,10 @@
             <i class="el-icon-house"></i>
             <span>首页</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="goToFollowing">
-            <i class="el-icon-star-off"></i>
-            <span>关注内容</span>
-          </el-menu-item>
           <el-menu-item
             v-for="type in types"
             :key="type.id"
-            :index="(type.id + 2).toString()"
+            :index="(type.id + 1).toString()"
             @click="
               (this.keyword = ''),
                 (this.selecttype = type.typename),
@@ -91,7 +87,6 @@
             </div>
           </div>
 
-          <!-- Part 2: Top Video Thumbnails -->
           <div class="top-thumbnails-wrapper">
             <div
               class="video-thumbnail-wrapper"
@@ -120,7 +115,7 @@
           </div>
         </div>
 
-        <!-- Part 3: Bottom Video Grid -->
+        
         <div class="video-grid">
           <div
             class="video-thumbnail-wrapper"
@@ -383,10 +378,7 @@ export default {
   width: 630px;
 }
 
-/* .avatar-dropdown {
-  float: right;
-  margin-right: 20px;
-} */
+
 
 .menu {
   border-right: 0;

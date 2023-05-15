@@ -232,13 +232,7 @@ handleVideoChange(file) {
   color: white;
 }
 
-/* .avatar-dropdown {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  line-height: normal;
-} */
+
 
 .el-main {
   display: flex;

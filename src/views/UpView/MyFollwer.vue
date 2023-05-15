@@ -67,7 +67,6 @@
       return {
         isCollapse: false,
         users: [
-          // 假设的用户数据，请根据实际情况替换或从后端获取
           {
             username: 'User1',
             avatar: 'https://example.com/avatar1.jpg',

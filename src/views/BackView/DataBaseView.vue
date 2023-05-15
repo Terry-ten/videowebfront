@@ -89,7 +89,7 @@ export default {
       // this.filename=file.name;
       const fileExtension = file.name.split(".").pop().toLowerCase();
       if (fileExtension !== "sql" || this.fileList.length > 0) {
-        this.$message.error("只能上传一个sql文件！");
+        this.$message.error("文件格式有误！");
         return false;
       }
       const tableName = file.name;

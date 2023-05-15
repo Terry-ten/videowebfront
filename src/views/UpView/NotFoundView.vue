@@ -2,7 +2,7 @@
     <div class="not-found-container">
       <div class="not-found-text">
         <h1>404</h1>
-        <p>抱歉，我们找不到您要访问的页面。</p>
+        <p>抱歉，找不到您要访问的页面。</p>
         <router-link to="/videoweb" class="home-link">返回首页</router-link>
         <p>5 秒后自动跳转到首页...</p>
       </div>

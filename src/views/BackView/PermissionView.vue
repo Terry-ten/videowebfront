@@ -71,7 +71,7 @@
         v-model="selectedPermissionKeys"
         :data="permissions"
         :titles="['可选权限', '已选权限']"
-        :props="{ key: 'key', label: 'label', disabled: 'disabled' }"
+        :props="{ key: 'key', label: 'label', disabled: 'disabled' }" 
         filterable
         filter-placeholder="请输入权限名称"
         @change="handlePermissionChange"
@@ -152,7 +152,7 @@ import AsideView from '../PopularElment/AsideView.vue';
           // 处理权限数据，添加 chosen 属性
           this.permissions = allPermissions.map((permission) => {
             return {
-              key: permission.id,
+           key: permission.id,
           label: permission.permissionname,
           chosen: selectedPermissionIds.includes(permission.id),
           // 如果 permissionname 是 "Admin Home"，则设置 disabled 为 true
@@ -169,16 +169,14 @@ import AsideView from '../PopularElment/AsideView.vue';
     },
 
     handlePermissionChange(newSelected, direction, movedKeys) {
-  // 检查是否移动了权限a，b或c
+  // 检查是否移动了权限
   const involvesABC = [2, 3, 4].some(key => movedKeys.includes(key));
 
   if (involvesABC) {
     if (direction === 'right') { // 分配权限
-      // 如果分配了权限a，确保权限b和c也被分配
       if (movedKeys.includes(4) && !newSelected.includes(2)) newSelected.push(2);
       if (movedKeys.includes(4) && !newSelected.includes(3)) newSelected.push(3);
     } else { // 撤销权限
-      // 如果撤销了权限b或c，并且权限a也在已选权限中，则同时撤销权限a
       if ((movedKeys.includes(2) || movedKeys.includes(3)) && newSelected.includes(4)) {
         const index = newSelected.indexOf(4);
         if (index > -1) newSelected.splice(index, 1);

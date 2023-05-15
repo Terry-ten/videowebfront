@@ -19,7 +19,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   response => {
-    // 对响应数据做点什么
     if (response.data.msg === 'NOT_LOGIN') {
       // 未登录时的处理逻辑，例如重定向到登录页面
       router.push("/login")
@@ -32,7 +31,6 @@ instance.interceptors.response.use(
     return response;
   },
   error => {
-    // 对响应错误做点什么
     return Promise.reject(error);
   },
 );

@@ -78,8 +78,6 @@ export default {
       this.$router.push("/videoweb");
     },
     getUserInfo() {
-      // 获取用户信息
-      // 替换为真实的接口
       this.loading = true;
           axios.get("/api/users/get/"+this.userId).then((result) => {
             if(result.data.code===200){
@@ -138,7 +136,7 @@ export default {
   align-items: center;
   background-color: #409eff;
   height: 60px;
-  position: relative; /* 添加这一行 */
+  position: relative; 
 }
 .user-info-container {
   text-align: left;
